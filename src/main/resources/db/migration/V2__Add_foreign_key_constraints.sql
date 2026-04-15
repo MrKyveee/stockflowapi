@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ALTER TABLE user 
     ADD COLUMN tenant_id VARCHAR(36),
     ADD COLUMN role_id VARCHAR(36),
@@ -55,7 +54,6 @@ ALTER TABLE product_category
     ADD CONSTRAINT fk_pc_category 
         FOREIGN KEY (category_id) 
         REFERENCES category (id) ON DELETE CASCADE;
-=======
 ALTER TABLE users
     ADD COLUMN tenant_id  VARCHAR(36),
     ADD COLUMN role_id    VARCHAR(36),
@@ -133,4 +131,3 @@ ALTER TABLE audit_logs
         FOREIGN KEY (tenant_id) 
         REFERENCES tenant (id) 
         ON DELETE CASCADE;
->>>>>>> feat/domain-entities-and-repositories
