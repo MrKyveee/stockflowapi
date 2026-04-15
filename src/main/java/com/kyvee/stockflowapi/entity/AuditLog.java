@@ -34,4 +34,8 @@ public class AuditLog {
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "tentant_id")
+    private Tenant tenant;
 }   
