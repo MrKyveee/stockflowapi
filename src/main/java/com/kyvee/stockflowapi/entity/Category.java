@@ -3,6 +3,8 @@ package com.kyvee.stockflowapi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,4 +28,11 @@ public class Category {
     @Column(nullable = false)
     @Builder.Default
     private Boolean active = true;
+
+    @ManyToOne
+    @JoinColumn(name = "tenant_id", nullable = false)
+    private Tenant tenant;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }

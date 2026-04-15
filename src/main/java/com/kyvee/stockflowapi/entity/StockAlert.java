@@ -19,9 +19,6 @@ public class StockAlert {
     @Column(columnDefinition = "VARCHAR(36)", updatable = false, nullable = false)
     private String id;
 
-    @Column(columnDefinition = "VARCHAR(36)", nullable = false)
-    private String productId;
-
     @Column(columnDefinition = "TEXT", nullable = false)
     private String message;
 
@@ -35,4 +32,8 @@ public class StockAlert {
 
     @Column
     private LocalDateTime resolvedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }
