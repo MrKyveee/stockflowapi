@@ -34,5 +34,5 @@ public class Category {
     private Tenant tenant;
 
     @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    private List<ProductCategory> productCategories;
 }

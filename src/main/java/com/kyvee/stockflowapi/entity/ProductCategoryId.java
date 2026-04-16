@@ -5,17 +5,17 @@ import jakarta.persistence.Embeddable;
 import lombok.*;
 import java.io.Serializable;
 
-@Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
+@Embeddable
 public class ProductCategoryId implements Serializable {
 
-    @Column(columnDefinition = "VARCHAR(36)", nullable = false)
+    @Column(name = "product_id")
     private String productId;
 
-    @Column(columnDefinition = "VARCHAR(36)", nullable = false)
+    @Column(name = "category_id")
     private String categoryId;
 }
