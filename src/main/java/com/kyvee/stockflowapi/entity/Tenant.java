@@ -26,6 +26,9 @@ public class Tenant {
     @Column(length = 14)
     private String cnpj;
 
+    @Column(length = 20)
+    private String slug;
+
     @Column(length = 250, nullable = false)
     private String email;
 
