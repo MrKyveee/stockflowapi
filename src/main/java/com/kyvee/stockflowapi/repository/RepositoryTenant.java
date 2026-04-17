@@ -4,4 +4,10 @@ import com.kyvee.stockflowapi.entity.Tenant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RepositoryTenant extends JpaRepository<Tenant, String> {
+    void deleteByCnpj(String cnpj);
+
+    Tenant findByCnpj(String cnpj);
+
+    Tenant findBySlug(String slug);
+
 }

@@ -2,6 +2,7 @@ package com.kyvee.stockflowapi.service;
 
 import com.kyvee.stockflowapi.entity.Tenant;
 import com.kyvee.stockflowapi.repository.RepositoryTenant;
+import com.kyvee.stockflowapi.util.ValidationUtils;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,10 @@ public class ServiceTenant {
         tenant.setCnpj(validateCnpj(tenant.getCnpj()));
 
         // valida se o slug e nulo e o formata
-        tenant.setSlug(validateAndFormatSlug(tenant.getSlug()));
+        tenant.setSlug(ValidationUtils.validateAndFormatSlug(tenant.getSlug()));
 
         // valida se o email e nulo ou se o formato e invalido
-        tenant.setEmail(validateEmail(tenant.getEmail()));
+        tenant.setEmail(ValidationUtils.validateEmail(tenant.getEmail()));
 
         // valida se o telefone e nulo ou se o formato e invalido
         tenant.setPhone(validatePhoneNumber(tenant.getPhone()));
@@ -50,7 +51,7 @@ public class ServiceTenant {
     //------------------------------------------------------------------------------------------------------------------------------------------
     public Tenant findBySlug(String slug) {
 
-        String normalizedSlug = validateAndFormatSlug(slug);
+        String normalizedSlug = ValidationUtils.validateAndFormatSlug(slug);
 
         return repository.findBySlug(normalizedSlug);
     }
@@ -72,7 +73,7 @@ public class ServiceTenant {
     public void updateTenant(String slug, Tenant tenant) {
 
         // limpa o slug antes da busca e verifica se o tenant existe no banco
-        Tenant slugTenant = repository.findBySlug(validateAndFormatSlug(slug));
+        Tenant slugTenant = repository.findBySlug(ValidationUtils.validateAndFormatSlug(slug));
 
         if (slugTenant == null) {
             throw new RuntimeException();
@@ -83,7 +84,7 @@ public class ServiceTenant {
         }
 
         if (tenant.getEmail() != null) {
-            slugTenant.setEmail(validateEmail(tenant.getEmail()));
+            slugTenant.setEmail(ValidationUtils.validateEmail(tenant.getEmail()));
         }
 
         if (tenant.getPhone() != null) {
@@ -153,17 +154,6 @@ public class ServiceTenant {
         return cnpj;
     }
 
-    public String validateEmail(String email) {
-        // regex para validar formato de email
-        String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-z]{2,3}$";
-
-        if (email == null || !email.matches(emailRegex)) {
-            throw new RuntimeException("invalid email");
-        }
-
-        return email.trim().toLowerCase();
-    }
-
     public String validatePhoneNumber(String phone) {
         // regex para validar telefone fixo ou celular com ddd
         String phoneRegex = "^\\(?[1-9]{2}\\)?\\s?(?:[2-8]|9)[0-9]{3,4}\\-?[0-9]{4}$";
@@ -184,16 +174,5 @@ public class ServiceTenant {
         }
 
         return address.trim();
-    }
-
-    // valida o slug e o formata
-    public String validateAndFormatSlug(String slug) {
-
-        if (slug == null || slug.isBlank()) throw new RuntimeException("slug cannot be empty");
-
-        return slug
-                .toLowerCase()
-                .trim()
-                .replaceAll("\\s+", "-");
     }
 }
